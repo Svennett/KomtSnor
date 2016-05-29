@@ -1,17 +1,34 @@
-﻿using System;
+﻿using KomtSnor.Controllers;
+using KomtSnor.Domain;
+using KomtSnor.Models;
+using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Reflection;
+using System.Text;
 using System.Web;
 using System.Web.Mvc;
 
-namespace KomtSnor.Controllers
+namespace WebApplication1.Controllers
 {
-    public class HomeController : Controller
+    public class HomeController : BaseController
     {
         public ActionResult Index()
         {
-            return View();
+            List<string> authenticationConstants = GetConstants(typeof(Constants.Authentication));
+            List<string> loggedInAuthenticationConstants = GetLoggedInAuthentications(authenticationConstants);
+
+            HomeViewModels homeViewModel = new HomeViewModels();
+            homeViewModel.authenticationList = loggedInAuthenticationConstants;
+
+            return View(homeViewModel);
         }
+
+        private List<string> GetLoggedInAuthentications(List<string> authenticationConstants)
+        {
+            return authenticationConstants.Where(authenticationConstant => Session[authenticationConstant] != null).ToList();
+        }
+
 
         public ActionResult About()
         {
