@@ -6,7 +6,6 @@ using System.Web.Mvc;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using KomtSnor;
 using KomtSnor.Controllers;
-
 namespace KomtSnor.Tests.Controllers
 {
     [TestClass]

@@ -9,7 +9,7 @@ using System.Text;
 using System.Web;
 using System.Web.Mvc;
 
-namespace WebApplication1.Controllers
+namespace KomtSnor.Controllers
 {
     public class HomeController : BaseController
     {

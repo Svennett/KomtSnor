@@ -11,7 +11,7 @@ namespace KomtSnor.Domain
         public static class Authentication
         {
             public const string firebase = "FireBase";
-            public const int testInt = 123;
+            public const string currentActionDiscription = "currentActionDiscription_for_wrong_authentication";
         }
     }
 }
