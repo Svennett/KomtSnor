@@ -26,7 +26,10 @@ namespace KomtSnor.Controllers
 
         private List<string> GetLoggedInAuthentications(List<string> authenticationConstants)
         {
-            return authenticationConstants.Where(authenticationConstant => Session[authenticationConstant] != null).ToList();
+            authenticationConstants = authenticationConstants.Where(authenticationConstant => Session[authenticationConstant] != null).ToList();
+            authenticationConstants = authenticationConstants.Where(authenticationConstant => Session[authenticationConstant] is LoginUser).ToList();
+            return authenticationConstants;
+
         }
 
 

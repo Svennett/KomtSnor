@@ -203,6 +203,7 @@
     <Compile Include="Controllers\SecuredController.cs" />
     <Compile Include="Domain\Domain.cs" />
     <Compile Include="Domain\FireBaseUser.cs" />
+    <Compile Include="Domain\LoginUser.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
@@ -280,6 +281,8 @@
     <Content Include="Views\Shared\_LoginPartial.cshtml" />
     <Content Include="Views\Login\FirebaseLogin.cshtml" />
     <Content Include="Views\Secured\SecuredPage1.cshtml" />
+    <Content Include="Views\Login\FacebookLogin.cshtml" />
+    <Content Include="Views\Login\GoogleLogin.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

@@ -5,13 +5,15 @@ using System.Web;
 
 namespace KomtSnor.Domain
 {
-    public class FireBaseUser : LoginUser
+    public class LoginUser
     {
-        public FireBaseUser(string email, string uid) : base(email, uid)
+        public string email;
+        public string uid;
+
+        public LoginUser(string email, string uid)
         {
             this.email = email;
             this.uid = uid;
         }
-
     }
 }
