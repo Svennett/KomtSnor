@@ -203,12 +203,14 @@
     <Compile Include="Controllers\SecuredController.cs" />
     <Compile Include="Domain\Domain.cs" />
     <Compile Include="Domain\FireBaseUser.cs" />
+    <Compile Include="Domain\GoogleUser.cs" />
     <Compile Include="Domain\LoginUser.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\CustomAnnotations\FireBaseAuthentication.cs" />
+    <Compile Include="Models\CustomAnnotations\GoogleAuthentication.cs" />
     <Compile Include="Models\HomeViewModels.cs" />
     <Compile Include="Models\IdentityModels.cs" />
     <Compile Include="Models\ManageViewModels.cs" />
@@ -222,7 +224,7 @@
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Global.asax" />
     <Content Include="Content\Site.css" />
-    <Content Include="Images\mustache.png" />
+    <Content Include="Documents\Images\mustache.png" />
     <Content Include="Scripts\ai.0.15.0-build58334.js" />
     <Content Include="Scripts\ai.0.15.0-build58334.min.js" />
     <Content Include="Scripts\bootstrap.js" />

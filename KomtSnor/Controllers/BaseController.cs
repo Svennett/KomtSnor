@@ -12,10 +12,15 @@ namespace KomtSnor.Controllers
     {
         protected FireBaseUser FireBaseUser
         {
-            get { return (FireBaseUser)Session[Constants.Authentication.firebase]; }
-            set { Session[Constants.Authentication.firebase] = value; }
+            get { return (FireBaseUser)Session[Constants.Authentication.Firebase]; }
+            set { Session[Constants.Authentication.Firebase] = value; }
         }
 
+        protected GoogleUser GoogleUser
+        {
+            get { return (GoogleUser)Session[Constants.Authentication.Google]; }
+            set { Session[Constants.Authentication.Google] = value; }
+        }
 
 
         protected List<string> GetConstants(Type tClass, Type restrictionType)

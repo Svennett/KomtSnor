@@ -34,7 +34,7 @@ namespace KomtSnor.Controllers
             string previousPage;
             try
             {
-                actionDescriptor = (ActionDescriptor)Session[Constants.Authentication.currentActionDiscription];
+                actionDescriptor = (ActionDescriptor)Session[Constants.Authentication.CurrentActionDiscription];
             }
             catch
             {
@@ -60,7 +60,26 @@ namespace KomtSnor.Controllers
             return View();
         }
 
+        [HttpPost]
+        public ActionResult GoogleLogin(FormCollection collection)
+        {
+            var id_token = collection["id_token"];
+            var name = collection["name"];
+            var email = collection["email"];
+            GoogleUser = new GoogleUser(email, id_token, name);
+            ActionResult previousPageActionResult = CheckSessionForCurrentActionDescriptor();
+            return Json(new {result = "succes", actionResult = previousPageActionResult });
+        }
+
+
+
         public ActionResult FacebookLogin()
+        {
+            return View();
+        }
+
+        [HttpPost]
+        public ActionResult FacebookLogin(FormCollection collection)
         {
             return View();
         }

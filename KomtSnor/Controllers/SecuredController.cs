@@ -11,6 +11,7 @@ namespace KomtSnor.Controllers
     {
         // GET: Secured
         [FireBaseAuthentication]
+        [GoogleAuthentication]
         public ActionResult SecuredPage1()
         {
             return View();

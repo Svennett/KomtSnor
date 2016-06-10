@@ -159,6 +159,5 @@ C:\Users\sven\Documents\KomtSnor\Project\KomtSnor\bin\Microsoft.Owin.Security.OA
 C:\Users\sven\Documents\KomtSnor\Project\KomtSnor\bin\Microsoft.Owin.Security.Google.xml
 C:\Users\sven\Documents\KomtSnor\Project\KomtSnor\bin\Microsoft.Owin.Security.Twitter.xml
 C:\Users\sven\Documents\KomtSnor\Project\KomtSnor\bin\Microsoft.Owin.Security.MicrosoftAccount.xml
-C:\Users\sven\Documents\KomtSnor\Project\KomtSnor\obj\Debug\KomtSnor.csprojResolveAssemblyReference.cache
 C:\Users\sven\Documents\KomtSnor\Project\KomtSnor\obj\Debug\KomtSnor.dll
 C:\Users\sven\Documents\KomtSnor\Project\KomtSnor\obj\Debug\KomtSnor.pdb

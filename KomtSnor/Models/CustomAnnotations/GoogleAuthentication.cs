@@ -1,23 +1,24 @@
-﻿using System.Web;
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Web;
 using System.Web.Mvc;
 using System.Web.Routing;
 using KomtSnor.Domain;
 
 namespace KomtSnor.Models.CustomAnnotations
 {
-    public class FireBaseAuthentication : AuthorizeAttribute
+    public class GoogleAuthentication : AuthorizeAttribute
     {
-        // Custom property
         public string AccessLevel { get; set; }
 
         protected override bool AuthorizeCore(HttpContextBase httpContext)
         {
             var session = httpContext.Session;
-            var response = httpContext.Response;
             try
             {
-                FireBaseUser firaBaseUser = (FireBaseUser)session[Constants.Authentication.Firebase];
-                if (firaBaseUser != null)
+                GoogleUser googleUser = (GoogleUser)session[Constants.Authentication.Google];
+                if (googleUser != null)
                 {
                     return true;
                 }
@@ -32,9 +33,6 @@ namespace KomtSnor.Models.CustomAnnotations
 
         protected override void HandleUnauthorizedRequest(AuthorizationContext filterContext)
         {
-            string requestController = filterContext.ActionDescriptor.ControllerDescriptor.ControllerName;
-            string requestPage = filterContext.ActionDescriptor.ActionName;
-
             var session = filterContext.HttpContext.Session;
             session[Constants.Authentication.CurrentActionDiscription] = filterContext.ActionDescriptor;
 
@@ -43,9 +41,11 @@ namespace KomtSnor.Models.CustomAnnotations
                             new
                             {
                                 controller = "Login",
-                                action = "FireBaseLogin"
+                                action = "GoogleLogin"
                             })
                         );
         }
+
+
     }
 }
