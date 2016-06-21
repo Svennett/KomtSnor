@@ -1,0 +1,63 @@
+﻿@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<script src="https://apis.google.com/js/platform.js" async defer></script>
+<meta name="google-signin-client_id" content="828730293498-8bbbg3ikots5q21uji4m5fl4pe9su474.apps.googleusercontent.com">
+<div>GOOGLE LOGIN:</div><br/>
+
+<div id="SignButtons">
+    <div id="g-LoginB" class="g-signin2" data-onsuccess="onSignIn"></div>
+</div>
+<script>
+    function onSignIn(googleUser) {
+        //examples for retrieving the user info
+        /*var profile = googleUser.getBasicProfile();
+        console.log('ID: ' + profile.getId()); // Do not send to your backend!!! Use an ID token instead. If you want to send it to the backend then: "var id_token = googleUser.getAuthResponse().id_token";
+        console.log('Name: ' + profile.getName());
+        console.log('Image URL: ' + profile.getImageUrl());
+        console.log('Email: ' + profile.getEmail());*/
+
+        afterSuccesfullLogin(googleUser);
+        
+        var logout = $('<div id="g-LogoutB"><a href="#" onclick="signOut();">Sign out</a></div>');
+        if (!$("#g-LogoutB").length) {
+            logout.appendTo($("#SignButtons"));
+        }
+    }
+    
+    function signOut() {
+        var auth2 = gapi.auth2.getAuthInstance();
+        auth2.signOut().then(function () {
+            console.log('User signed out.');
+        });
+        $("#g-LogoutB").remove();
+    }
+
+    function afterSuccesfullLogin(googleUser) {
+        var googleBasicProfile = googleUser.getBasicProfile();
+        var data = {
+            id_token: googleUser.getAuthResponse().id_token,
+            name: googleBasicProfile.getName(),
+            email: googleBasicProfile.getEmail()
+        };
+
+        var url = "/Login/GoogleLogin";
+        $.post(url, data, function (data) {
+            redirectPage(data);
+        });
+    }
+
+    function redirectPage(ajaxData) {
+        var routeValues = ajaxData.actionResult.RouteValues;
+
+        var actionObject = routeValues[0];
+        var actionValue = actionObject.Value;
+        var controllerObject = routeValues[1];
+        var controllerValue = controllerObject.Value;
+
+        var newLink = "/" + controllerValue + "/" + actionValue;
+        window.location.replace(newLink);
+    };
+</script>
+

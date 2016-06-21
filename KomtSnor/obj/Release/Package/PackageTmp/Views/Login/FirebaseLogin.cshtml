@@ -1,0 +1,86 @@
+﻿
+@{
+    ViewBag.Title = "Logins";
+}
+
+<img src="/Images/firebase_logo.png" alt="Firebase Logo" style="width: 30%; height: 30%; padding-top: 1%">
+
+@using (Html.BeginForm("FireBaseLogin", "Login", FormMethod.Post, new { @class = "form-horizontal", role = "form", id = "loginForm" }))
+{
+    @Html.Hidden("uid");
+    <label id="loginErrorLabel" class="control-label has-error" style="display: none; ">NOOOO, SOMETHING NOT BUËNO</label>
+
+        <div class="form-group">
+            <label for="Email" class="col-md-2 control-label">Required: </label>
+            <div class="col-md-10">
+                @Html.TextBox("Email", "", new { @class = "form-control" })
+            </div>
+        </div>
+        <div class="form-group">
+            <label for="Password" class="col-md-2 control-label">Required: </label>
+            <div class="col-md-10">
+                @Html.Password("Password", "", new { @class = "form-control" })
+            </div>
+        </div>
+        <div class="form-group">
+            <input id="loginButton" class="btn btn-default" style="margin-left: 15px;" value="do_something" />
+        </div>
+}
+<script>
+    var firebaseRef = new Firebase("https://komtsnor.firebaseio.com/");
+
+    var form = $("#loginForm");
+
+
+
+    $(function () {
+        $("#loginButton").click(function () {
+
+            if (form.valid()) {
+                var email = $("#Email").val();
+                var password = $("#Password").val();
+                login(email, password);
+            }
+
+        });
+    });
+
+
+    function login(email, password) {
+        firebaseRef.authWithPassword({
+            "email": email,
+            "password": password
+        }, function (error, authData) {
+            if (error) {
+                $("#loginErrorLabel").show();
+            } else {
+                $("#loginErrorLabel").hide();
+                afterSuccesLogin();
+            }
+        });
+    }
+
+
+    function afterSuccesLogin() {
+        var authData = firebaseRef.getAuth();
+        $("#uid").val(authData.uid);
+        if (authData) {
+            form.submit();
+        }
+    }
+
+
+    form.validate({
+        rules: {
+            Email: {
+                required: true,
+                email: true
+            },
+            Password: {
+                required: true
+            }
+        }
+    });
+
+
+</script>

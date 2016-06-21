@@ -3,7 +3,7 @@
     ViewBag.Title = "Logins";
 }
 
-<img src="/Images/firebase_logo.png" alt="Firebase Logo" style="width: 30%; height: 30%; padding-top: 1%">
+<img src="~/Documents/Images/firebase_logo.png" alt="Firebase Logo" class="img-responsive" width="400" height="100" style="padding-top: 5px;">
 
 @using (Html.BeginForm("FireBaseLogin", "Login", FormMethod.Post, new { @class = "form-horizontal", role = "form", id = "loginForm" }))
 {
@@ -11,38 +11,41 @@
     <label id="loginErrorLabel" class="control-label has-error" style="display: none; ">NOOOO, SOMETHING NOT BUËNO</label>
 
         <div class="form-group">
-            <label for="Email" class="col-md-2 control-label">Required: </label>
+            <label for="Email" class="col-md-2 control-label">Email: </label>
             <div class="col-md-10">
                 @Html.TextBox("Email", "", new { @class = "form-control" })
             </div>
         </div>
         <div class="form-group">
-            <label for="Password" class="col-md-2 control-label">Required: </label>
+            <label for="Password" class="col-md-2 control-label">Password: </label>
             <div class="col-md-10">
                 @Html.Password("Password", "", new { @class = "form-control" })
             </div>
         </div>
         <div class="form-group">
-            <input id="loginButton" class="btn btn-default" style="margin-left: 15px;" value="do_something" />
+            <input id="loginButton" class="btn btn-default" style="margin-left: 15px;" value="Doe iets!!!" />
         </div>
 }
 <script>
     var firebaseRef = new Firebase("https://komtsnor.firebaseio.com/");
-
     var form = $("#loginForm");
-
-
 
     $(function () {
         $("#loginButton").click(function () {
-
             if (form.valid()) {
                 var email = $("#Email").val();
                 var password = $("#Password").val();
                 login(email, password);
             }
-
         });
+        $(document).keypress(function (e) {
+            if (e.which === 13 && form.valid()) {
+                var email = $("#Email").val();
+                var password = $("#Password").val();
+                login(email, password);
+            }
+        });
+
     });
 
 
@@ -79,6 +82,13 @@
             Password: {
                 required: true
             }
+        },
+        messages: {
+            Email: {
+                required: "U bent verplicht een Email in te vullen",
+                email: "Noem je dit een email, Dit kan echt niet door de beugel"
+            },
+            Password: "Vul gewoon wat in"
         }
     });
 

@@ -1,0 +1,51 @@
+﻿@using System.Text
+@using KomtSnor.Models
+@model HomeViewModels
+@{
+    ViewBag.Title = "Home Page";
+}
+
+<div class="jumbotron">
+    <div align="center">
+        <h1>Komt snor</h1>
+        <p class="lead">Hoe snor zit jouw snor?</p>
+        <p>
+            <img src="Documents/Images/mustache.png" alt="De Snor" style="width: 300px; height: 150px;">
+        </p>
+    </div>
+</div>
+
+<div class="row">
+    @if (Model.authenticationList.Count > 0)
+    {
+        <div class="col-md-4">
+            <h2>Logged in with:</h2>
+            <p>
+                @{
+                    string s = "";
+                    foreach (string authenticationConstant in Model.authenticationList)
+                    {
+                        s += Html.Label(authenticationConstant).ToString();
+                        s += "<br/>";
+                    }
+                }
+                @Html.Raw(s)
+            </p>
+        </div>
+                    }
+
+    <div class="col-md-4">
+        <h2>Get more libraries</h2>
+        <p>NuGet is a free Visual Studio extension that makes it easy to add, remove, and update libraries and tools in Visual Studio projects.</p>
+        <p>
+            <a class="btn btn-default" href="http://go.microsoft.com/fwlink/?LinkId=301866">Learn more &raquo;</a>
+        </p>
+    </div>
+    <div class="col-md-4">
+        <h2>Web Hosting</h2>
+        <p>You can easily find a web hosting company that offers the right mix of features and price for your applications.</p>
+        <p>
+            <a class="btn btn-default" href="http://go.microsoft.com/fwlink/?LinkId=301867">Learn more &raquo;</a>
+        </p>
+    </div>
+</div>
