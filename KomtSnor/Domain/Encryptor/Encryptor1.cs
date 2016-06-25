@@ -5,8 +5,8 @@ namespace KomtSnor.Domain.Encryptor
 {
     public class Encryptor1
     {
-        private const string EcryptedKeyFilePath = "/frREionP2vdiTGzJwuM/KEfGbEFLeBDMosgWtIvOvWd7A0J2hKJ6xrBDF/YgKNrPGeVOvU7vMUQ5fbzW4lGa0gIwm6jQ63IoWbaAMs+OJ0=";
-        private const string EcryptedIVFilePath = "/frREionP2vdiTGzJwuM/KEfGbEFLeBDMosgWtIvOvWd7A0J2hKJ6xrBDF/YgKNrmwJ+VJvycXwZVAcEiuolGn9GAyheJPdW3061u0yBbVI=";
+        private static string key = System.Configuration.ConfigurationManager.AppSettings["keyEncryptor1"];
+        private static string IV = System.Configuration.ConfigurationManager.AppSettings["IVEncryptor1"];
 
 
         public static string Encrypt(string text)
@@ -37,8 +37,6 @@ namespace KomtSnor.Domain.Encryptor
 
         private static AesCryptoServiceProvider CreateCryptoServiceProvider()
         {
-            string key = GetValueFromTextFile(EcryptedKeyFilePath);
-            string IV = GetValueFromTextFile(EcryptedIVFilePath);
             AesCryptoServiceProvider aesCrypto = new AesCryptoServiceProvider();
             aesCrypto.BlockSize = 128;
             aesCrypto.KeySize = 256;
@@ -48,13 +46,5 @@ namespace KomtSnor.Domain.Encryptor
             aesCrypto.Mode = CipherMode.CBC;
             return aesCrypto;
         }
-
-        private static string GetValueFromTextFile(string encryptedFilePath)
-        {
-            string decriptedFilePath = DefaultEncryptor.Decrypt(encryptedFilePath);
-            string fileValue = System.IO.File.ReadAllText(decriptedFilePath);
-            return fileValue ;
-        }
-
     }
 }

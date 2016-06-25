@@ -202,7 +202,6 @@
     <Compile Include="Controllers\ManageController.cs" />
     <Compile Include="Controllers\SecuredController.cs" />
     <Compile Include="Domain\Constants.cs" />
-    <Compile Include="Domain\Encryptor\DefaultEncryptor.cs" />
     <Compile Include="Domain\Encryptor\Encryptor1.cs" />
     <Compile Include="Domain\Users\FireBaseUser.cs" />
     <Compile Include="Domain\Users\GoogleUser.cs" />
