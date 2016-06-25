@@ -4,21 +4,24 @@ using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 using System.Web.Routing;
+using KomtSnor.Domain.Users;
 using KomtSnor.Domain;
 
 namespace KomtSnor.Models.CustomAnnotations
 {
-    public class GoogleAuthentication : AuthorizeAttribute
+    public class SqlServerAuthentication : AuthorizeAttribute
     {
+        // Custom property
         public string AccessLevel { get; set; }
 
         protected override bool AuthorizeCore(HttpContextBase httpContext)
         {
             var session = httpContext.Session;
+            var response = httpContext.Response;
             try
             {
-                GoogleUser googleUser = (GoogleUser)session[Constants.Authentication.GoogleAuthentication];
-                if (googleUser != null)
+                SQLServerUser sqlServerUser = (SQLServerUser)session[Constants.Authentication.SqlServerAuthentication];
+                if (sqlServerUser != null)
                 {
                     return true;
                 }
@@ -33,6 +36,9 @@ namespace KomtSnor.Models.CustomAnnotations
 
         protected override void HandleUnauthorizedRequest(AuthorizationContext filterContext)
         {
+            string requestController = filterContext.ActionDescriptor.ControllerDescriptor.ControllerName;
+            string requestPage = filterContext.ActionDescriptor.ActionName;
+
             var session = filterContext.HttpContext.Session;
             session[Constants.Authentication.CurrentActionDiscription] = filterContext.ActionDescriptor;
 
@@ -41,11 +47,9 @@ namespace KomtSnor.Models.CustomAnnotations
                             new
                             {
                                 controller = "Login",
-                                action = "GoogleLogin"
+                                action = "SQLServerLogin"
                             })
                         );
         }
-
-
     }
 }

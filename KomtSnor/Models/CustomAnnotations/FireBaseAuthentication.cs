@@ -16,7 +16,7 @@ namespace KomtSnor.Models.CustomAnnotations
             var response = httpContext.Response;
             try
             {
-                FireBaseUser firaBaseUser = (FireBaseUser)session[Constants.Authentication.Firebase];
+                FireBaseUser firaBaseUser = (FireBaseUser)session[Constants.Authentication.FireBaseAuthentication];
                 if (firaBaseUser != null)
                 {
                     return true;

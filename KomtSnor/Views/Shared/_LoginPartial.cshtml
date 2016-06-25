@@ -16,8 +16,10 @@
 else
 {
     <ul class="nav navbar-nav navbar-right">
-        <li>@Html.ActionLink("FireBase", "FireBaseLogin", "Login", routeValues: null, htmlAttributes: new { id = "FireBaseLink" })</li>
-        <li>@Html.ActionLink("Google", "GoogleLogin", "Login", routeValues: null, htmlAttributes: new { id = "GoogleLogin" })</li>
+        <li>@Html.ActionLink("FireBase", "FireBaseLogin", "Login", routeValues: null, htmlAttributes: new {id = "FireBaseLink"})</li>
+        <li>@Html.ActionLink("Google", "GoogleLogin", "Login", routeValues: null, htmlAttributes: new {id = "GoogleAuthenticationLogin"})</li>
         <li>@Html.ActionLink("Facebook", "FacebookLogin", "Login", routeValues: null, htmlAttributes: new { id = "FacebookLogin" })</li>
+        <li>@Html.ActionLink("SQLServer", "SQLServerLogin", "Login", routeValues: null, htmlAttributes: new {id = "SqlServerAuthenticationLogin"})</li>
     </ul>
+    
 }

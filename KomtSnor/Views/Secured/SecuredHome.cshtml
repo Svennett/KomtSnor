@@ -1,0 +1,65 @@
+﻿@using System.Reflection
+@using KomtSnor.Domain
+@model KomtSnor.Models.SecuredViewModel
+@{
+    ViewBag.Title = "SecuredHome";
+}
+
+<h2>SecuredHome</h2>
+
+<div id="all info" class="col-lg-10 AllPageBlocks">
+    @functions{
+
+        private string GetConstantValue(CustomAttributeData annotation)
+        {
+            string annotationName = annotation.AttributeType.Name;
+            Type constantAuthenticationType = typeof (Constants.Authentication);
+
+            var fields = constantAuthenticationType.GetFields();
+            FieldInfo constant = fields.FirstOrDefault(field => annotationName.Equals(field.Name));
+            string contantValue = constant.FieldType == typeof (string) ? (string) constant.GetRawConstantValue() : "NoString";
+
+            return contantValue;
+        }
+
+
+    }
+    @{
+        foreach (MethodInfo methodInfo in Model.MethodsInfos)
+        {
+            string methodName = methodInfo.Name;
+            IEnumerable<CustomAttributeData> customAnnotations = methodInfo.CustomAttributes;
+
+            <div id=@methodName class="col-lg-3 PageBlocks">
+                <h4>@Html.ActionLink(methodName, methodName, "Secured", new {@class = ""})</h4>
+                <ul>
+                    @{
+                        foreach (CustomAttributeData customAnnotation in customAnnotations)
+                        {
+                            string constantValue = GetConstantValue(customAnnotation);
+                            constantValue = "NoString".Equals(constantValue) ? customAnnotation.AttributeType.Name : constantValue;
+                            <li>@constantValue</li>
+                        }
+                        if (!customAnnotations.Any())
+                        {
+                            <li>deze pagina heeft geen annotaties</li>
+                        }
+                    }
+                </ul>
+            </div>
+        }
+    }
+
+</div>
+
+<style>
+.PageBlocks {
+    background-color: aliceblue;
+    margin: 10px;
+    height: 150px;
+}
+.AllPageBlocks {
+    margin-bottom: 20px;
+    width: 100%;
+}
+</style>

@@ -18,29 +18,29 @@
 <div class="row">
     @if (Model.authenticationList.Count > 0)
     {
-            <div class="col-md-4">
-                <h2>Logged in with:</h2>
-                <p>
-                    @{
-                        string s = "";
-                        foreach (string authenticationConstant in Model.authenticationList)
-                        {
-                            s += Html.Label(authenticationConstant).ToString();
-                            s += "<br/>";
-                        }
+        <div align="center" class="col-md-12">
+            <h2>Logged in with:</h2>
+            <p>
+                @{
+                    string s = "";
+                    foreach (string authenticationConstant in Model.authenticationList)
+                    {
+                        s += Html.Label(authenticationConstant).ToString();
+                        s += "<br/>";
                     }
-                    @Html.Raw(s)
-                </p>
-            </div>
-        }
-        else
-        {
-            <div align="center" class="col-md-12">
-                <h2>Welcome</h2>
-                <p>
-                    hier komen alle verschillende applicatie waarmee jij geautoriseerd bent.
-                    <br/> Dit is momenteel leeg, maar dat moet snor komen.
-                </p>
-            </div>
-        }
+                }
+                @Html.Raw(s)
+            </p>
+        </div>
+    }
+    else
+    {
+        <div align="center" class="col-md-12">
+            <h2>Welcome</h2>
+            <p>
+                hier komen alle verschillende applicatie waarmee jij geautoriseerd bent.
+                <br/> Dit is momenteel leeg, maar dat moet snor komen.
+            </p>
+        </div>
+    }
 </div>

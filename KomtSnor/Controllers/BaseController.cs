@@ -5,6 +5,8 @@ using System.Linq;
 using System.Reflection;
 using System.Web;
 using System.Web.Mvc;
+using KomtSnor.Domain.Encryptor;
+using KomtSnor.Domain.Users;
 
 namespace KomtSnor.Controllers
 {
@@ -12,14 +14,20 @@ namespace KomtSnor.Controllers
     {
         protected FireBaseUser FireBaseUser
         {
-            get { return (FireBaseUser)Session[Constants.Authentication.Firebase]; }
-            set { Session[Constants.Authentication.Firebase] = value; }
+            get { return (FireBaseUser)Session[Constants.Authentication.FireBaseAuthentication]; }
+            set { Session[Constants.Authentication.FireBaseAuthentication] = value; }
         }
 
         protected GoogleUser GoogleUser
         {
-            get { return (GoogleUser)Session[Constants.Authentication.Google]; }
-            set { Session[Constants.Authentication.Google] = value; }
+            get { return (GoogleUser)Session[Constants.Authentication.GoogleAuthentication]; }
+            set { Session[Constants.Authentication.GoogleAuthentication] = value; }
+        }
+
+        protected SQLServerUser SqlServerUser
+        {
+            get { return (SQLServerUser)Session[Constants.Authentication.SqlServerAuthentication]; }
+            set { Session[Constants.Authentication.SqlServerAuthentication] = value; }
         }
 
 
