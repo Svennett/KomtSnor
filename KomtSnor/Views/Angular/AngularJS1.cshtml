@@ -1,0 +1,323 @@
+﻿
+@{
+    ViewBag.Title = "AngularJS1";
+}
+
+<h2>AngularJS1</h2>
+<div ng-app="myApp">
+    <div class="col-lg-12 ExcerciseBlock" ng-init="name='initialized bob'">
+        <p>
+            Name :
+            <input type="text" class="form-control" ng-model="name" />
+        </p>
+        goedemiddag: {{name}}
+        <br />
+        of: <label ng-bind="name"></label>
+    </div>
+
+
+    <div class="col-lg-12 ExcerciseBlock">
+        <p>
+            expression { {5+5} }: {{5+5}}
+        </p>
+        <p>
+            <div id="bgColorBlock" class="col-lg-12 ExcerciseBlock"  ng-init="bgColor='lightgrey'" style="background-color: #D8F6CE">
+                <div ng-Controller="ctrl1">
+                    change div background color
+                    <input type="text" ng-model="bgColor" style="background-color: {{bgColor}}" />
+                    <input id="bgColor" type="button" class="btn-default" value="it's time for a change'" />
+                    <br />
+                </div>
+                <div ng-Controller="ctrl2" style="margin-top: 10px">
+                    First name: <input type="text" ng-model="firstName" /> <br />
+                    Last name: <input type="text" ng-model="lastName" /> <br />
+                    the full name: {{firstName + " " + lastName}}
+                </div>
+            </div>
+            <script>
+                var app = angular.module('myApp', []);
+
+                app.controller('ctrl1', function ($scope) {
+                    $("#bgColor").click(function() {
+                        $("#bgColorBlock").css("background-color", $scope.bgColor);
+                    });
+                });
+
+                app.controller('ctrl2', function ($scope) {
+                    $scope.firstName = "Bob";
+                    $scope.lastName = "Bernardus";
+                });
+            </script>
+        </p>
+    </div>
+
+    <div class="col-lg-12 ExcerciseBlock" ng-init="person={firstName:'Bob', lastName:'Bernardus'}; points=[1,5,3,0,19,6,18]">
+        <p>
+            ng-init="person={firstName:'Bob', lastName:'Bernardus'}" <br/>
+            firstName: {{person.firstName}} lastName: <span ng-bind="person.lastName"></span>
+        </p>
+        <p>
+            ng-init="points=[1,5,3,0,19,6,18]" <br/>
+            get value points[4]: {{ points[4] }} <br/>
+        </p>
+        <p>
+            loop through points with ng-repeat="point in points" <br/>
+            <span ng-repeat="point in points">
+                {{point}}
+            </span>
+            
+            <div ng-Controller="ctrl3" ng-init="points=[9,3,44,6,2,76,1]">
+                or loop through the array angular.forEach() <br/>
+                {{value}}
+            </div>
+       
+        </p>
+        <script>
+            var values = "";
+            app.controller('ctrl3', function($scope) {
+                angular.forEach($scope.points, function (value) {
+                    values = values + " " + value;
+                });
+                $scope.value = values;
+            });
+        </script>
+    </div>
+
+    <div class="col-lg-12 ExcerciseBlock">
+        <p>
+            <first-direction>
+            </first-direction>
+            <xmp><first-direction></first-direction></xmp>
+        </p>
+        <p>
+            <div first-direction></div>
+            <xmp><div first-direction></div></xmp>
+        </p>
+        <p>
+            <div class="first-direction"></div>
+            <xmp><div class="first-direction"></div></xmp>
+        </p>
+        <p>
+            <!-- directive: first-direction -->
+            <xmp><!-- directive: first-direction --></xmp>
+        </p>
+
+        <script>
+            app.directive("firstDirection", function() {
+                return {
+                    restrict: "E", //E: Element
+                    replace: true,
+                    template: "<h4> awesome tekst </h4>"
+                };
+            });
+            app.directive("firstDirection", function () {
+                return {
+                    restrict: "A", //A: Attribute
+                    replace: true,
+                    template: "<h4> awesome tekst </h4>"
+                };
+            });
+            app.directive("firstDirection", function () {
+                return {
+                    restrict: "C", //C: Class
+                    replace: true,
+                    template: "<h4> awesome tekst </h4>"
+                };
+            });
+            app.directive("firstDirection", function () {
+                return {
+                    restrict: "M", //M: Comment
+                    replace: true,
+                    template: "<h4> awesome tekst </h4>"
+                };
+            });
+        </script>
+    </div>
+
+    <div class="col-lg-12 ExcerciseBlock">
+        <h4>Validation</h4>
+        <form name="myForm">
+            <p>
+                Email: <input class="emailInput" type="email" name="myEmail" ng-model="text" />
+                <br />
+                <span ng-show="myForm.myEmail.$error.email">Not okidoki</span>
+            </p>
+           
+            <p>Valid: {{myForm.myEmail.$valid}} (if true, the value meets all criteria).</p>
+            <p>Dirty: {{myForm.myEmail.$dirty}} (if true, the value has been changed).</p>
+            <p>Touched: {{myForm.myEmail.$touched}} (if true, the field has been in focus).</p>
+
+        </form>
+        <style>
+            input.emailInput.ng-invalid, input.emailInput.ng-untouched{
+                background-color: lightblue;
+            }
+        </style>
+    </div>
+
+    <div class="col-lg-12 ExcerciseBlock" ng-init="name='bobberdianus'">
+        <h4> filters </h4>
+        <p>
+            { {name | uppercase} } : {{name | uppercase}}
+            <br/>
+            { {name | lowercase} } ; {{name | lowercase}}
+        </p>
+        <div ng-Controller="filterController">
+            <p>
+                repeat through list and orderBy lastName
+                <ul>
+                    <li ng-repeat="x in users | orderBy: 'lastName'">
+                        {{x.firstName + " " + x.lastName}}
+                    </li>
+                </ul>
+            </p>
+            <p>
+                repeat through list and filter lastName that have an i
+                <ul>
+                    <li ng-repeat="x in users | filter: {'lastName' : 'i'}">
+                        {{x.firstName + " " + x.lastName}}
+                    </li>
+                </ul>
+            </p>
+            <p>
+                repeat through list and filter list by input
+                <ul>
+                    <input type="text" ng-model="personFilter"></input>
+                    <li ng-repeat="x in users | filter : personFilter">
+                        {{x.firstName + " " + x.lastName}}
+                    </li>
+                </ul>
+            </p>
+        </div>
+
+        <script>
+            app.controller('filterController', function($scope) {
+                $scope.users = [
+                    { firstName: 'Bob', lastName: 'Bernardus' },
+                    { firstName: 'Karel', lastName: 'Pieters' },
+                    { firstName: 'Herman', lastName: 'Fouwlers' },
+                    { firstName: 'Bernard', lastName: 'Jansen' }
+                ];
+            });
+        </script>
+    </div>
+
+    <div class="col-lg-12 ExcerciseBlock" ng-Controller="filterTable">
+
+        <table >
+            <tr>
+                <th ng-click="orderByMe='firstName'">first name</th>
+                <th ng-click="orderByMe='lastName'">last name</th>
+            </tr>
+            <tr ng-repeat="x in users | orderBy : orderByMe">
+                <td>{{x.firstName}}</td>
+                <td>{{x.lastName}}</td>
+            </tr>
+        </table>
+
+
+        <script>
+            app.controller('filterTable', function($scope) {
+                $scope.users = [
+                    { firstName: 'Bob', lastName: 'Bernardus' },
+                    { firstName: 'Karel', lastName: 'Pieters' },
+                    { firstName: 'Herman', lastName: 'Fouwlers' },
+                    { firstName: 'Bernard', lastName: 'Jansen' }
+                ];
+            });
+
+        </script>
+        <style>
+            table td, table th {
+                border-left: 1px solid #000;
+                border-right: 1px solid #000;
+                padding-left: 5px;
+                padding-right: 5px;
+            }
+        </style>
+    </div>
+
+    <div class="col-lg-12 ExcerciseBlock" ng-Controller="selectBoxCtrl">
+        <h4> SelectBox </h4>
+        <p>
+            <select id="selectBoxUsers" ng-model="selectBoxModel" ng-options="x.lastName for x in users" ng-change="checkSelectBoxValue()"></select>
+            <br/>
+            {{selectBoxModel}}
+        </p>
+        <script>
+            app.controller('selectBoxCtrl', function($scope) {
+                $scope.users = [
+                    { firstName: 'Bob', lastName: 'Bernardus' },
+                    { firstName: 'Karel', lastName: 'Pieters' },
+                    { firstName: 'Herman', lastName: 'Fouwlers' },
+                    { firstName: 'Bernard', lastName: 'Jansen' }
+                ];
+                $scope.selectBoxModel = $scope.users[2];
+
+                $scope.checkSelectBoxValue = function () {
+                    var selectedUser = $scope.selectBoxModel;
+                    console.log(selectedUser);
+                }
+            });
+        </script>
+    </div>
+
+
+    <div class="col-lg-12 ExcerciseBlock" ng-Controller="ctrl4" ng-init="inputModel='bob'">
+        <p>
+            add or remove a label.
+        </p>
+        <p>
+            <ul>
+                <li ng-repeat="x in labelList">
+                    {{x}}
+                    <button type="button" class="btn btn-default" style="padding:0px" accesskeyaria-label="Left Align" ng-click="removeLabel(x)">
+                        <span class="glyphicon glyphicon-remove" aria-hidden="true"></span>
+                    </button>
+                </li>
+            </ul>
+        </p>
+        <p>
+            <input class="labelInput" type="text" ng-model="inputModel"/> <input type="button" ng-click="addNewLabel()"/>
+        </p>
+
+        <script>
+            app.controller('ctrl4', function($scope) {
+                $scope.labelList = ["hallo1", "hallo2", "hallo3"];
+
+                $scope.addNewLabel = function() {
+                    var newLabel = $scope.inputModel;
+                    var allLabels = $scope.labelList;
+                    if (newLabel) {
+                        if (allLabels.indexOf(newLabel) === -1) {
+                            $scope.labelList.push(newLabel);
+                            $scope.inputModel = "";
+                        } else {
+                            alert("the list already contains: " + newLabel);
+                        }
+                    }
+                }
+
+
+                $scope.removeLabel = function(oldLabel) {
+                    var allLabels = $scope.labelList;
+                    var oldLabelIndex = allLabels.indexOf(oldLabel);
+                    if (oldLabelIndex > -1) {
+                        allLabels.splice(oldLabelIndex, 1);
+                    }
+                }
+            });
+        </script>
+
+    </div>
+
+
+
+</div>
+<style>
+    .ExcerciseBlock {
+        background-color: aliceblue;
+        margin: 10px;
+        padding: 20px;
+    }
+</style>
