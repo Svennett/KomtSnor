@@ -1,5 +1,6 @@
 ﻿using KomtSnor.Domain;
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Data;
 using System.Data.SqlClient;
@@ -103,14 +104,14 @@ namespace KomtSnor.Controllers
             string encryptedPassword = Encryptor1.Encrypt(password);
             SqlCommand queryCommand = CreateSQLCommand(email, encryptedPassword);
 
-            String connectionString = System.Configuration.ConfigurationManager.ConnectionStrings["KomtSnorDatabase"].ConnectionString;
-            SQLServerUser sqlServerUser = ExecuteSQLCommand(connectionString, queryCommand);
+            ArrayList sqlValues = SQLServerGateway.ExecuteSelectCommand(queryCommand);
 
-            string sqlCommandResult = getSqlServerResult(sqlServerUser);
-            this.SqlServerUser = sqlCommandResult == Constants.Login.Succes ? sqlServerUser : null;
+            SQLServerUser sqlServerUser = getSQLUserValuesFromDataReader(sqlValues);
+            string loginResult = (sqlServerUser.email != Constants.Login.MultipleUsersFound && sqlServerUser.email != Constants.Login.NoUserFound) ? Constants.Login.Succes : sqlServerUser.email;
+            this.SqlServerUser = loginResult == Constants.Login.Succes ? sqlServerUser : null;
 
             ActionResult previousPageActionResult = CheckSessionForCurrentActionDescriptor();
-            return Json(new { result = sqlCommandResult, actionResult = previousPageActionResult });
+            return Json(new { result = loginResult, actionResult = previousPageActionResult });
         }
 
         private SqlCommand CreateSQLCommand(string email, string password)
@@ -125,7 +126,7 @@ namespace KomtSnor.Controllers
             myCommand.Parameters.AddRange(commandParameters);
             
             //set command text
-            string commandText = "SELECT TOP 1 * " +
+            string commandText = "SELECT * " +
                              "FROM[dbo].[tbl_User] " +
                              "WHERE LOWER(UserEmail) =LOWER(@Email) AND UserPassword =@Password";
             myCommand.CommandText = commandText;
@@ -133,48 +134,26 @@ namespace KomtSnor.Controllers
             return myCommand;
         }
 
-        private SQLServerUser ExecuteSQLCommand(string connectionString, SqlCommand sqlCommand)
+        private SQLServerUser getSQLUserValuesFromDataReader(ArrayList sqlValue)
         {
             SQLServerUser sqlServerUser = new SQLServerUser(Constants.Login.NoUserFound, Constants.Login.NoUserFound, Constants.Login.NoUserFound);
 
-            using (SqlConnection connection = new SqlConnection())
+            int readCounter = 1;
+            foreach (Object[] row in sqlValue)
             {
-                connection.ConnectionString = connectionString;
-                connection.Open();
-                sqlCommand.Connection = connection;
-                SqlDataReader sqlDataReader = sqlCommand.ExecuteReader();
+                string userID = row[0].ToString();
+                string userName = row[1].ToString();
+                string userEmail = row[2].ToString();
 
-                int readCounter = 1;
-                while (sqlDataReader.Read())
-                {
-                    string userEmail = sqlDataReader["UserEmail"].ToString();
-                    string userID = sqlDataReader["UserID"].ToString();
-                    string userName = sqlDataReader["UserName"].ToString();
+                sqlServerUser = readCounter == 1
+                   ? new SQLServerUser(userEmail, userID, userName)
+                   : new SQLServerUser(Constants.Login.MultipleUsersFound, Constants.Login.MultipleUsersFound, Constants.Login.MultipleUsersFound);
 
-                    sqlServerUser = readCounter == 1
-                        ? new SQLServerUser(userEmail, userID, userName)
-                        : new SQLServerUser(Constants.Login.MultipleUsersFound, Constants.Login.MultipleUsersFound, Constants.Login.MultipleUsersFound);
-
-                    readCounter++;
-                }
+                readCounter++;
             }
-
             return sqlServerUser;
         }
 
-        private string getSqlServerResult(SQLServerUser sqlServerUser)
-        {
-            string result = Constants.Login.Succes;
-            if (Constants.Login.NoUserFound.Equals(sqlServerUser.email))
-            {
-                result = Constants.Login.NoUserFound;
-            }
-            if (Constants.Login.MultipleUsersFound.Equals(sqlServerUser.email))
-            {
-                result = Constants.Login.NoUserFound;
-            }
-            return result;
-        }
 
     }
 }

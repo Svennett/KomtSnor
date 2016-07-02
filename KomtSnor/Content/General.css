@@ -1,0 +1,11 @@
+﻿.loadingGif {
+    position: absolute;
+    left: 0px;
+    right: 0px;
+    margin: auto;
+    top: 0px;
+    bottom: 0px;
+    border-radius: 20%;
+    opacity: 0.3;
+    filter: alpha(opacity=30);
+}

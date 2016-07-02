@@ -7,6 +7,7 @@ using System.Web;
 using System.Web.Mvc;
 using KomtSnor.Domain.Encryptor;
 using KomtSnor.Domain.Users;
+using KomtSnor.Gateways;
 
 namespace KomtSnor.Controllers
 {
@@ -52,5 +53,7 @@ namespace KomtSnor.Controllers
 
             return constantsFields;
         }
+
+        protected SQLServerGateway SQLServerGateway => new SQLServerGateway();
     }
 }

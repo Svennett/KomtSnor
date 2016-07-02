@@ -2,7 +2,7 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<img src="~/Documents/Images/SQLServerImg.png" alt="Firebase Logo" class="img-responsive" width="100" height="100" style="padding-top: 5px;">
+<img src="~/Documents/Images/SQLServerImg.png" alt="SQLServer Logo" class="img-responsive" width="100" height="100" style="padding-top: 5px;">
 @using (Html.BeginForm("SQLServerLogin", "Login", FormMethod.Post, new { @class = "form-horizontal", role = "form", id = "loginForm" }))
 {
     <div class="form-group">
@@ -22,8 +22,16 @@
     </div>
     <div class="form-group">
         <input id="loginButton" class="btn btn-default" style="margin-left: 15px;" value="Bring it on" />
+        <input id="registerButton" class="btn btn-default" style="margin-left: 15px;" value="Register"/>
     </div>
+
 }
+
+<div id="loadingGif" style="display: none">
+    <img src="~/Documents/Images/loadingGifs/octopus.gif" alt="Octopus loading gif" class="img-responsive loadingGif" width="200" height="200">
+</div>
+
+
 
 <script>
     $(function () {
@@ -35,11 +43,15 @@
                 buttonClick();
             }
         });
+        $("#registerButton").click(function() {
+            registerClick();
+        });
     });
 
 
 
     function buttonClick() {
+        $("#loadingGif").show();
         var data = {
             email: $("#Email").val(),
             password: $("#Password").val()
@@ -51,6 +63,7 @@
     }
 
     function afterSubmit(result) {
+        $("#loadingGif").hide();
         var loginResult = result.result;
         if (loginResult === "NoUserFound") {
             $("#loginErrorLabel").text("No User with these cridetials was found");
@@ -75,5 +88,9 @@
         var newLink = "/" + controllerValue + "/" + actionValue;
         window.location.replace(newLink);
     };
+
+    function registerClick() {
+        window.location.replace("/Register/SQLServerRegister");
+    }
 
 </script>
