@@ -1,0 +1,213 @@
+﻿@using KomtSnor.EntityFramework
+@using KomtSnor.Models
+@model RegistrationViewModels
+@{
+    ViewBag.Title = "SQLServerRegister";
+}
+
+<h2>SQLServer registration</h2>
+
+<img src="~/Documents/Images/SQLServerImg.png" alt="SQLServer Logo" class="img-responsive" width="100" height="100" style="padding-top: 5px;">
+<div>
+    @using (Html.BeginForm("SQLServer_EntityRegistration", "Registration", FormMethod.Post, new { @class = "form-horizontal", role = "form", id = "registerForm", enctype = "multipart/form-data"}))
+    {
+        <div>
+            <input style="display: none" type="text" name="fakeusernameremembered" />
+            <input style="display: none" type="password" name="fakepasswordremembered" />
+
+            <div class="form-group">
+                <label for="name" class="col-md-2 control-label">Naam: </label>
+                <div class="col-md-10">
+                    <input name="name" id="name" type="text" class="form-control validationChangeColor"/>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label for="email" class="col-md-2 control-label">email: </label>
+                <div class="col-md-10">
+                    <input name="email" id="email" type="email" class="form-control validationChangeColor" />
+                </div>
+            </div>
+
+            <div class="form-group">
+                <div>
+                    <label class="col-md-2 control-label">Wachtwoord: </label>
+                    <div class="col-md-10">
+                        <input id="password1" type="password" name="password1" class="form-control validationChangeColor"/>
+                    </div>
+                </div>
+                <br/>
+                <div style="margin-top: 2px">
+                    <label class="col-md-2 control-label">nog een keertje:</label>
+                    <div class="col-md-10">
+                        <input id="password2" type="password" name="password2" class="form-control validationChangeColor"/>
+                    </div>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label for="gender" class="col-md-2 control-label">Geslacht: </label>
+                <div class="col-md-10">
+                    <input type="radio" name="gender" value="Male" checked> Man<br>
+                    <input type="radio" name="gender" value="Female"> Vrouw<br>
+                    <input type="radio" name="gender" value="Other"> Anders
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label for="country" class="col-md-2 control-label">Land van afkomst: </label>
+                <div class="col-md-10">
+                    <select class="form-control countryFlags">
+                        @{
+                            foreach (tbl_Country country in Model.Countries)
+                            {
+                                byte[] imageInBytes = country.CountryFlag;
+                                var base64 = Convert.ToBase64String(imageInBytes);
+                                var imgSrc = string.Format("data:image;base64,{0}", base64);
+                                <option style="background-image:url(@imgSrc)" value="@country.CountryName">@country.CountryName </option>
+                            }
+                        }
+                    </select>
+                </div>
+            </div>
+
+            <div class="form-group formPosition">
+                <label class="col-md-2 control-label">Profiel foto: </label>
+                <div class="col-lg-10">
+                    <div class="imageFrame">
+                        <img type="image" id="profilePicture" src="#" alt="foto..." class="imageItSelf" />
+                    </div>
+                    <input id="imageInput" type="file" name="imageInput" accept="image/jpeg, image/gif, image/png">
+                </div>
+            </div>
+
+            <div class="form-group">
+                <button id="loginButton" class="btn btn-default" style="margin-left: 15px;">Doe iets!!!</button>
+                <input id="cancleButton" class="btn btn-default" style="margin-left: 15px;" type="button" value="laat maar zitten"/>
+            </div>
+        </div>
+    }
+
+    <div id="loadingGif" style="display: none">
+        <img src="~/Documents/Images/loadingGifs/octopus.gif" alt="Octopus loading gif" class="img-responsive loadingGif" width="200" height="200">
+    </div>
+
+    <script>
+        $(function () {
+            $("#loginButton").click(function () {
+                $("#loadingGif").show();
+                if (!$("#registerForm").valid()) {
+                    $("#loadingGif").hide();
+                }
+                $("#registerForm").submit();
+            });
+
+            $(document).keypress(function (e) {
+                if (e.which === 13) {
+                    $("#loginButton").click();
+                }
+            });
+
+            $("#cancleButton").click(function () {
+                window.location.replace("/Login/SQLServerLogin");
+            });
+
+            $("#imageInput").change(function () {
+                readImage(this);
+            });
+        });
+
+        function readImage(input) {
+            if (input.files && input.files[0]) {
+                var reader = new FileReader();
+                reader.onload = function (e) {
+                    $("#profilePicture").attr('src', e.target.result);
+                };
+                reader.readAsDataURL(input.files[0]);
+            }
+        }
+
+
+
+        jQuery.validator.addMethod("emailCheck", function (value, element) {
+            var emailResult = "NoResult";
+            $.ajax({
+                    method: "POST",
+                    url: "/Registration/CheckSQLServerUserEmail",
+                    data: { email: value },
+                    async: false
+                })
+                .done(function (result) {
+                    emailResult = result.result;
+                });
+            return emailResult === "Free";
+        }, "Dit email Address is al bekend bij ons");
+
+        $("#registerForm").validate({
+            rules: {
+                name: "required",
+                email: {
+                    email: true,
+                    required: true,
+                    emailCheck : true
+                },
+                password1: "required",
+                password2: {
+                    required: true,
+                    equalTo : "#password1"
+                },
+                imageInput: {
+                    accept: "image/jpeg, image/gif, image/png"
+                }
+            },
+            messages: {
+                name: "Naam is verplicht",
+                email: {
+                    email: "Noem je dit een email",
+                    required: "Email is verplicht"
+                },
+                password1: "je kan deze niet leeg laten",
+                password2: {
+                    required: "je kan deze niet leeg laten",
+                    equalTo: "wat ben je nou aan het doen. die wachtwoorden zijn niet gelijk"
+                },
+                imageInput: {
+                    accept: "sorry alleen .jpeg .jpg .png .gif"
+                }
+            }
+        });
+    </script>
+    <style>
+        input.validationChangeColor.valid{
+            background-color: #E0F8E0;
+        }
+        input.validationChangeColor.error {
+            background-color: #FBEFF2;
+        }
+
+        .imageFrame {
+            max-width: 120px;
+            max-height: 150px;
+            display: table-cell;
+            text-align: center;
+            vertical-align: middle;
+            width: 120px;
+            height: 150px;
+            background-color: #f5f5f5;
+            border: 1px solid #cccccc;
+        }
+        .imageFrame * {
+          vertical-align: middle;
+        }
+        img.imageItSelf {
+            max-width: 118px;
+            max-height: 148px;
+        }
+        select.countryFlags option {
+            background-repeat:no-repeat;
+            background-position:bottom left;
+            padding-left:30px;
+            background-size: 20px 15px;
+        }
+    </style>
+</div>

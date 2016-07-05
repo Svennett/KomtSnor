@@ -20,6 +20,7 @@ namespace KomtSnor.Controllers
 
             HomeViewModels homeViewModel = new HomeViewModels();
             homeViewModel.authenticationList = loggedInAuthenticationConstants;
+            homeViewModel.countries = SqlsEntityGateway.GetAllCountries();
 
             return View(homeViewModel);
         }

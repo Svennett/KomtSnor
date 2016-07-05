@@ -5,10 +5,10 @@ using System.Web;
 
 namespace KomtSnor.Domain.Users
 {
-    public class SQLServerUser : LoginUser
+    public class SQLServer_LoginUser : LoginUser
     {
         public string userName { get; }
-        public SQLServerUser(string email, string uid, string userName ) : base(email, uid)
+        public SQLServer_LoginUser(string email, string uid, string userName ) : base(email, uid)
         {
             this.email = email;
             this.uid = uid;

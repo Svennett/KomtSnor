@@ -4,12 +4,12 @@ using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 using System.Web.Routing;
-using KomtSnor.Domain.Users;
 using KomtSnor.Domain;
+using KomtSnor.Domain.Users;
 
 namespace KomtSnor.Models.CustomAnnotations
 {
-    public class SqlServerAuthentication : AuthorizeAttribute
+    public class SqlServer_EntityAuthentication : AuthorizeAttribute
     {
         // Custom property
         public string AccessLevel { get; set; }
@@ -20,7 +20,7 @@ namespace KomtSnor.Models.CustomAnnotations
             var response = httpContext.Response;
             try
             {
-                SQLServerUser sqlServerUser = (SQLServerUser)session[Constants.Authentication.SqlServerAuthentication];
+                SQLServer_EntityUser sqlServerUser = (SQLServer_EntityUser)session[Constants.Authentication.SqlServer_EntityAuthentication];
                 if (sqlServerUser != null)
                 {
                     return true;
@@ -47,7 +47,7 @@ namespace KomtSnor.Models.CustomAnnotations
                             new
                             {
                                 controller = "Login",
-                                action = "SQLServerLogin"
+                                action = "SQLServer_EntityLogin"
                             })
                         );
         }

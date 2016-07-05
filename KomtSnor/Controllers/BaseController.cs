@@ -13,6 +13,13 @@ namespace KomtSnor.Controllers
 {
     public class BaseController : Controller
     {
+        private SQLServer_EntityGateway _sqlsEntityGateway;
+
+        public BaseController()
+        {
+           _sqlsEntityGateway = new SQLServer_EntityGateway();
+        }
+
         protected FireBaseUser FireBaseUser
         {
             get { return (FireBaseUser)Session[Constants.Authentication.FireBaseAuthentication]; }
@@ -25,12 +32,22 @@ namespace KomtSnor.Controllers
             set { Session[Constants.Authentication.GoogleAuthentication] = value; }
         }
 
-        protected SQLServerUser SqlServerUser
+        protected SQLServer_LoginUser SqlServer_LoginUser
         {
-            get { return (SQLServerUser)Session[Constants.Authentication.SqlServerAuthentication]; }
-            set { Session[Constants.Authentication.SqlServerAuthentication] = value; }
+            get { return (SQLServer_LoginUser)Session[Constants.Authentication.SqlServer_LoginAuthentication]; }
+            set { Session[Constants.Authentication.SqlServer_LoginAuthentication] = value; }
         }
 
+        protected SQLServer_EntityUser SqlServer_EntityUser
+        {
+            get { return (SQLServer_EntityUser)Session[Constants.Authentication.SqlServer_EntityAuthentication]; }
+            set { Session[Constants.Authentication.SqlServer_EntityAuthentication] = value; }
+        }
+
+        protected SQLServer_EntityGateway SqlsEntityGateway
+        {
+            get { return _sqlsEntityGateway;}
+        }
 
         protected List<string> GetConstants(Type tClass, Type restrictionType)
         {
@@ -54,6 +71,6 @@ namespace KomtSnor.Controllers
             return constantsFields;
         }
 
-        protected SQLServerGateway SQLServerGateway => new SQLServerGateway();
+        protected SQLServer_LoginGateway SqlServerLoginGateway => new SQLServer_LoginGateway();
     }
 }

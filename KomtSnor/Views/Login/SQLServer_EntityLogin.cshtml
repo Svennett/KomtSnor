@@ -1,0 +1,97 @@
+﻿@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<img src="~/Documents/Images/SQLServerImg2.png" alt="SQLServer Logo" class="img-responsive" width="200" height="200" style="padding-top: 5px;">
+<h3>Via Entity framework</h3>
+@using (Html.BeginForm("SQLServer_EntityLogin", "Login", FormMethod.Post, new { @class = "form-horizontal", role = "form", id = "loginForm" }))
+{
+    <div class="form-group">
+        <label id="loginErrorLabel" class="control-label has-error" style="display: none;"> NOOOO, SOMETHING NOT MUCHO FRESCO!!!! </label>
+    </div>
+    <div class="form-group">
+        <label for="Email" class="col-md-2 control-label">Email: </label>
+        <div class="col-md-10">
+            @Html.TextBox("Email", "", new { @class = "form-control" })
+        </div>
+    </div>
+    <div class="form-group">
+        <label for="Password" class="col-md-2 control-label">Password: </label>
+        <div class="col-md-10">
+            @Html.Password("Password", "", new { @class = "form-control" })
+        </div>
+    </div>
+    <div class="form-group">
+        <input id="loginButton" class="btn btn-default" style="margin-left: 15px;" value="Bring it on" />
+        <input id="registerButton" class="btn btn-default" style="margin-left: 15px;" value="Register"/>
+    </div>
+
+}
+
+<div id="loadingGif" style="display: none">
+    <img src="~/Documents/Images/loadingGifs/octopus.gif" alt="Octopus loading gif" class="img-responsive loadingGif" width="200" height="200">
+</div>
+
+
+
+<script>
+    $(function () {
+        $("#loginButton").click(function () {
+            buttonClick();
+        });
+        $(document).keypress(function (e) {
+            if (e.which === 13) {
+                buttonClick();
+            }
+        });
+        $("#registerButton").click(function() {
+            registerClick();
+        });
+    });
+
+
+
+    function buttonClick() {
+        $("#loadingGif").show();
+        var data = {
+            email: $("#Email").val(),
+            password: $("#Password").val()
+        };
+        var url = "/Login/SQLServer_EntityLogin";
+        $.post(url, data, function (result) {
+            afterSubmit(result);
+        });
+    }
+
+    function afterSubmit(result) {
+        $("#loadingGif").hide();
+        var loginResult = result.result;
+        if (loginResult === "NoUserFound") {
+            $("#loginErrorLabel").text("No User with these cridetials was found");
+            $("#loginErrorLabel").show();
+
+        }else if (loginResult === "MultipleUsersFound") {
+            $("#loginErrorLabel").text("Something is not right, multiple Users were found with these cridentials");
+            $("#loginErrorLabel").show();
+        } else {
+            redirectPage(result.actionResult);
+        }
+    }
+
+    function redirectPage(actionResult) {
+        var routeValues = actionResult.RouteValues;
+
+        var actionObject = routeValues[0];
+        var actionValue = actionObject.Value;
+        var controllerObject = routeValues[1];
+        var controllerValue = controllerObject.Value;
+
+        var newLink = "/" + controllerValue + "/" + actionValue;
+        window.location.replace(newLink);
+    };
+
+    function registerClick() {
+        window.location.replace("/Registration/SQLServer_EntityRegistration");
+    }
+
+</script>

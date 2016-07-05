@@ -1,0 +1,72 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="KomtSnor_EntityModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+  <EntityType Name="tbl_Login">
+    <Key>
+      <PropertyRef Name="LoginID" />
+    </Key>
+    <Property Name="LoginID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="LoginEmail" Type="String" MaxLength="255" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="LoginPassword" Type="String" MaxLength="255" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="LoginStatus" Type="String" MaxLength="255" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="LoginCreationDate" Type="DateTime" Nullable="false" Precision="0" />
+    <Property Name="UserID" Type="Int32" Nullable="false" />
+    <NavigationProperty Name="tbl_User" Relationship="Self.FK__tbl_Login__UserI__25869641" FromRole="tbl_Login" ToRole="tbl_User" />
+    <NavigationProperty Name="tbl_User1" Relationship="Self.UserIDConstraint" FromRole="tbl_Login" ToRole="tbl_User" />
+  </EntityType>
+  <EntityType Name="tbl_User">
+    <Key>
+      <PropertyRef Name="UserID" />
+    </Key>
+    <Property Name="UserID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="UserName" Type="String" MaxLength="255" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="UserGender" Type="String" MaxLength="255" FixedLength="false" Unicode="false" Nullable="false" />
+    <NavigationProperty Name="tbl_Login" Relationship="Self.FK__tbl_Login__UserI__25869641" FromRole="tbl_User" ToRole="tbl_Login" />
+    <NavigationProperty Name="tbl_Login1" Relationship="Self.UserIDConstraint" FromRole="tbl_User" ToRole="tbl_Login" />
+  </EntityType>
+  <Association Name="FK__tbl_Login__UserI__25869641">
+    <End Role="tbl_User" Type="Self.tbl_User" Multiplicity="1" />
+    <End Role="tbl_Login" Type="Self.tbl_Login" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="tbl_User">
+        <PropertyRef Name="UserID" />
+      </Principal>
+      <Dependent Role="tbl_Login">
+        <PropertyRef Name="UserID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="UserIDConstraint">
+    <End Role="tbl_User" Type="Self.tbl_User" Multiplicity="1" />
+    <End Role="tbl_Login" Type="Self.tbl_Login" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="tbl_User">
+        <PropertyRef Name="UserID" />
+      </Principal>
+      <Dependent Role="tbl_Login">
+        <PropertyRef Name="UserID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <EntityContainer Name="KomtSnor_Entity_FrameworkConnectionSettings" annotation:LazyLoadingEnabled="true">
+    <EntitySet Name="tbl_Login" EntityType="Self.tbl_Login" />
+    <EntitySet Name="tbl_User" EntityType="Self.tbl_User" />
+    <AssociationSet Name="FK__tbl_Login__UserI__25869641" Association="Self.FK__tbl_Login__UserI__25869641">
+      <End Role="tbl_User" EntitySet="tbl_User" />
+      <End Role="tbl_Login" EntitySet="tbl_Login" />
+    </AssociationSet>
+    <AssociationSet Name="UserIDConstraint" Association="Self.UserIDConstraint">
+      <End Role="tbl_User" EntitySet="tbl_User" />
+      <End Role="tbl_Login" EntitySet="tbl_Login" />
+    </AssociationSet>
+    <EntitySet Name="tbl_Country" EntityType="KomtSnor_EntityModel.tbl_Country" />
+  </EntityContainer>
+  <EntityType Name="tbl_Country">
+    <Key>
+      <PropertyRef Name="CountryID" />
+    </Key>
+    <Property Name="CountryID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="CountryName" Type="String" Nullable="false" MaxLength="255" FixedLength="false" Unicode="false" />
+    <Property Name="CountryCode" Type="String" Nullable="false" MaxLength="255" FixedLength="false" Unicode="false" />
+    <Property Name="CountryFlag" Type="Binary" MaxLength="Max" FixedLength="false" />
+  </EntityType>
+</Schema>

@@ -3,7 +3,7 @@
 }
 
 <img src="~/Documents/Images/SQLServerImg.png" alt="SQLServer Logo" class="img-responsive" width="100" height="100" style="padding-top: 5px;">
-@using (Html.BeginForm("SQLServerLogin", "Login", FormMethod.Post, new { @class = "form-horizontal", role = "form", id = "loginForm" }))
+@using (Html.BeginForm("SQLServer_LoginLogin", "Login", FormMethod.Post, new { @class = "form-horizontal", role = "form", id = "loginForm" }))
 {
     <div class="form-group">
         <label id="loginErrorLabel" class="control-label has-error" style="display: none;"> NOOOO, SOMETHING NOT MUCHO FRESCO!!!! </label>
@@ -22,7 +22,7 @@
     </div>
     <div class="form-group">
         <input id="loginButton" class="btn btn-default" style="margin-left: 15px;" value="Bring it on" />
-        <input id="registerButton" class="btn btn-default" style="margin-left: 15px;" value="Register"/>
+        <input id="cancel" class="btn btn-default" style="margin-left: 15px;" value="Cancel"/>
     </div>
 
 }
@@ -43,8 +43,8 @@
                 buttonClick();
             }
         });
-        $("#registerButton").click(function() {
-            registerClick();
+        $("#cancel").click(function () {
+            cancel();
         });
     });
 
@@ -56,7 +56,7 @@
             email: $("#Email").val(),
             password: $("#Password").val()
         };
-        var url = "/Login/SQLServerLogin";
+        var url = "/Login/SQLServer_LoginLogin";
         $.post(url, data, function (result) {
             afterSubmit(result);
         });
@@ -89,8 +89,8 @@
         window.location.replace(newLink);
     };
 
-    function registerClick() {
-        window.location.replace("/Register/SQLServerRegister");
+    function cancel() {
+        window.location.replace("/Home/Index");
     }
 
 </script>

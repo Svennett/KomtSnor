@@ -16,7 +16,6 @@ C:\Users\sven\Documents\KomtSnor\Project\KomtSnor.Tests\bin\Debug\KomtSnor.Tests
 C:\Users\sven\Documents\KomtSnor\Project\KomtSnor.Tests\bin\Debug\KomtSnor.Tests.dll
 C:\Users\sven\Documents\KomtSnor\Project\KomtSnor.Tests\bin\Debug\KomtSnor.Tests.pdb
 C:\Users\sven\Documents\KomtSnor\Project\KomtSnor.Tests\bin\Debug\KomtSnor.dll
-C:\Users\sven\Documents\KomtSnor\Project\KomtSnor.Tests\bin\Debug\Microsoft.VisualStudio.QualityTools.UnitTestFramework.dll
 C:\Users\sven\Documents\KomtSnor\Project\KomtSnor.Tests\bin\Debug\Microsoft.Web.Infrastructure.dll
 C:\Users\sven\Documents\KomtSnor\Project\KomtSnor.Tests\bin\Debug\Newtonsoft.Json.dll
 C:\Users\sven\Documents\KomtSnor\Project\KomtSnor.Tests\bin\Debug\System.Web.Helpers.dll
@@ -54,3 +53,9 @@ C:\Users\sven\Documents\KomtSnor\Project\KomtSnor.Tests\bin\Debug\EntityFramewor
 C:\Users\sven\Documents\KomtSnor\Project\KomtSnor.Tests\bin\Debug\Microsoft.Owin.Host.SystemWeb.xml
 C:\Users\sven\Documents\KomtSnor\Project\KomtSnor.Tests\obj\Debug\KomtSnor.Tests.dll
 C:\Users\sven\Documents\KomtSnor\Project\KomtSnor.Tests\obj\Debug\KomtSnor.Tests.pdb
+C:\Users\sven\Documents\KomtSnor\Project\KomtSnor.Tests\bin\Debug\System.Web.Http.dll
+C:\Users\sven\Documents\KomtSnor\Project\KomtSnor.Tests\bin\Debug\System.Web.Http.WebHost.dll
+C:\Users\sven\Documents\KomtSnor\Project\KomtSnor.Tests\bin\Debug\System.Net.Http.Formatting.dll
+C:\Users\sven\Documents\KomtSnor\Project\KomtSnor.Tests\bin\Debug\System.Web.Http.xml
+C:\Users\sven\Documents\KomtSnor\Project\KomtSnor.Tests\bin\Debug\System.Web.Http.WebHost.xml
+C:\Users\sven\Documents\KomtSnor\Project\KomtSnor.Tests\bin\Debug\System.Net.Http.Formatting.xml

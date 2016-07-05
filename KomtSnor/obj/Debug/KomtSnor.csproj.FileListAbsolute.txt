@@ -161,10 +161,10 @@ C:\Users\sven\Documents\KomtSnor\Project\KomtSnor\bin\Microsoft.Owin.Security.Tw
 C:\Users\sven\Documents\KomtSnor\Project\KomtSnor\bin\Microsoft.Owin.Security.MicrosoftAccount.xml
 C:\Users\sven\Documents\KomtSnor\Project\KomtSnor\obj\Debug\KomtSnor.dll
 C:\Users\sven\Documents\KomtSnor\Project\KomtSnor\obj\Debug\KomtSnor.pdb
-C:\Users\sven\Documents\KomtSnor\Project\KomtSnor\obj\Debug\KomtSnor.csprojResolveAssemblyReference.cache
 C:\Users\sven\Documents\KomtSnor\Project\KomtSnor\bin\System.Net.Http.Formatting.dll
 C:\Users\sven\Documents\KomtSnor\Project\KomtSnor\bin\System.Web.Http.dll
 C:\Users\sven\Documents\KomtSnor\Project\KomtSnor\bin\System.Web.Http.WebHost.dll
 C:\Users\sven\Documents\KomtSnor\Project\KomtSnor\bin\System.Net.Http.Formatting.xml
 C:\Users\sven\Documents\KomtSnor\Project\KomtSnor\bin\System.Web.Http.xml
 C:\Users\sven\Documents\KomtSnor\Project\KomtSnor\bin\System.Web.Http.WebHost.xml
+C:\Users\sven\Documents\KomtSnor\Project\KomtSnor\obj\Debug\KomtSnor.csprojResolveAssemblyReference.cache

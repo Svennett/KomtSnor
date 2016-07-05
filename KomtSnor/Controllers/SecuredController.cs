@@ -5,12 +5,14 @@ using System.Linq;
 using System.Reflection;
 using System.Web;
 using System.Web.Mvc;
+using KomtSnor.EntityFramework;
+using KomtSnor.Gateways;
 using KomtSnor.Models;
 using KomtSnor.Models.CustomAnnotations;
 
 namespace KomtSnor.Controllers
 {
-    public class SecuredController : Controller
+    public class SecuredController : BaseController
     {
 
         public ActionResult SecuredHome()
@@ -39,7 +41,8 @@ namespace KomtSnor.Controllers
 
         [FireBaseAuthentication]
         [GoogleAuthentication]
-        [SqlServerAuthentication]
+        [SqlServer_LoginAuthentication]
+        [SqlServer_EntityAuthentication]
         public ActionResult SecuredPage1()
         {
             return View();

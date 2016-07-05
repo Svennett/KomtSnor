@@ -10,7 +10,7 @@ using KomtSnor.Domain.Users;
 
 namespace KomtSnor.Gateways
 {
-    public class SQLServerGateway
+    public class SQLServer_LoginGateway
     {
         public ArrayList ExecuteSelectCommand(SqlCommand sqlCommand)
         {
@@ -26,6 +26,7 @@ namespace KomtSnor.Gateways
                 return allRows;
             }
         }
+
 
         private ArrayList getValues(SqlDataReader reader)
         {
